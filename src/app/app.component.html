@@ -1,0 +1,96 @@
+
+<div class="c1">
+<div class="container">
+<div class="h1">
+  <h1>RESUME</h1>
+</div>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <div class="form-item">
+      <label for="firstname">Firstname: </label>
+      <input type="text"
+             id="firstname"
+      formControlName="firstname">
+    </div>
+      <div class="invalid-varning" *ngIf="form.get('firstname')?.invalid && form.get('firstname')?.touched">
+        Firstname is required!
+      </div>
+
+    <div class="form-item">
+      <label for="lastname">Lastname: </label>
+      <input type="text"
+             id="lastname"
+             formControlName="lastname">
+    </div>
+    <div class="invalid-varning" *ngIf="form.get('lastname')?.invalid && form.get('lastname')?.touched">
+      Lastname is required!
+    </div>
+
+    <div class="form-item">
+      <label for="mobile">Mobile: </label>
+      <input type="text"
+             id="mobile"
+             formControlName="mobile">
+    </div>
+    <div class="invalid-varning" *ngIf="form.get('mobile')?.getError('required') && form.get('mobile')?.touched">
+      phone is required!
+    </div>
+    <div class="invalid-varning" *ngIf="form.get('mobile')?.getError('pattern') && form.get('mobile')?.touched">
+      Phone patter is invalid!
+    </div>
+    <div class="invalid-varning" *ngIf="form.get('mobile')?.getError('maxlength') && form.get('mobile')?.touched">
+      Max length Exceeds!
+    </div>
+
+
+    <div class="gender form-item">
+<div>Gender: </div>
+    <div class="form-item" *ngFor="let gender of genders">
+      <label>
+      <input type="radio" formControlName="gender" [value]="gender">{{gender}}
+      </label>
+
+    </div>
+      <div class="invalid-varning" *ngIf="form.get('gender')?.invalid && form.get('gender')?.touched">
+        Gender is required!
+      </div>
+    </div>
+    <div class="form-item">
+      <label for="mail">Mail: </label>
+      <input type="text"
+             id="mail"
+             formControlName="mail">
+    </div>
+    <div class="invalid-varning" *ngIf="form.get('mail')?.invalid && form.get('mail')?.touched">
+      Mail is required!
+    </div>
+    <div class="invalid-varning" *ngIf="form.get('mail')?.getError('email') && form.get('mail')?.touched">
+      Mail format is invalid!
+    </div>
+    <div formArrayName="experience">
+      <div class="gender">
+     <h4>Add Experience</h4>
+      <button type="button" (click)="addExperience()">Add</button>
+      </div>
+      <ng-container *ngFor="let control of experienceFormArray.controls; let i = index">
+     <div [formGroupName]="i">
+       <input type="text" placeholder="company" formControlName="company">
+       <input type="text" placeholder="years" formControlName="years">
+       <button class="remove" type="button" (click)="removeExperience(i)">remove</button>
+     </div>
+
+      </ng-container>
+    </div>
+
+<div>
+<button type="submit" class="submit">Submit</button>
+</div>
+  </form>
+
+  valid: {{form.valid}}
+
+<pre>
+{{form.value | json}}
+</pre>
+</div>
+</div>
